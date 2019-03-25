@@ -1,0 +1,75 @@
+Hadoop Installation
+
+Goto terminal 
+To do any updates on installed hadoop type: $ sudo apt-get install updates
+Password: gprec@123
+To Install ssh: $ sudo apt-get install ssh
+$ sudo apt-get install rsync
+To check current directory $pwd
+$cd hadoop-2.9.2 (2.9.2 is not same for all computers, to see ur version-- Goto Home see the folder name with hadoop-(...) )
+In home open folder hadoop-2.9.2 open etc open hadoop, open hadoop-env.sh by gedit
+java_home=/usr
+save file
+
+In home open folder hadoop-2.9.2 open etc open hadoop, open core-site.xml by gedit
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://localhost:9000</value>
+</property>
+ save file
+ 
+ In home open folder hadoop-2.9.2 open etc open hadoop, open hdfs-site.xml by gedit
+ <property>
+<name>fs.replication</name>
+<value>1</value>
+</property>
+
+<property>
+<name>fs.permission</name>
+<value>false</value>
+</property>
+save file
+
+come back to terminal
+To check whether ssh(shell) is installed
+$ ssh localhost
+
+$clear
+For key generation 
+$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized-keys
+$ chmod 0600 ~/.ssh/authorized-keys
+
+$ cd hadoop-2.9.2
+$ bin/hdfs namenode -format
+$ sbin/start-dfs.sh
+
+Now open browser type 
+
+http://localhost:50070/
+
+No files are there in hadoop 
+
+THE END
+
+To add files to hadoop (Map reduce Program)
+Do the Hadoop Installation process first and continue with the following commands
+
+$ jps
+$ cd hadoop-2.9.2/bin/hadoop fs -ls
+
+No files in directory, so to ADD files
+Create directory using command
+$  hadoop-2.9.2 fs -mkdir /directoryname(pk)
+
+Goto home take any text file and copy file location path 
+( HERE to select text file , home--hadoop-2.9.2--hadoop-2.9.2--select NOTICE.txt (right click -- properties --copy location)
+
+$ bin/hadoop fs -put (paste copied location)/home/cclab220/hadoop-2.9.2/hadoop-2.9.2/NOTICE.txt  /pk
+$ bin/hadoop fs -ls/pk
+$ bin/hadoop fs -cat /pk/NOTICE.txt
+$ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.2.jar grep /pk/NOTICE.txt /myoutput 'This'
+
+Goto browser
+http://localhost:50070/
+select pk file, click on Download , From downloads arrow symbol, open file which is output
